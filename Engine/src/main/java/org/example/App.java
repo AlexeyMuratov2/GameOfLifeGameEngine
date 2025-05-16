@@ -1,14 +1,16 @@
 package org.example;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import org.example.controller.MainController;
-import org.example.view.MainView;
+import org.example.view.*;
 
-public class App extends Application {
-    @Override
-    public void start(Stage stage) throws Exception {
-        MainView mainView = new MainView();
-        MainController mainController = new MainController(mainView);
+import javax.swing.*;
+
+public class App {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            GridView gridView = new GridView(30, 30);
+            RuleEditorView ruleEditorView = new RuleEditorView();
+            ControlsView controlsView = new ControlsView();
+            new MainView(gridView, ruleEditorView, controlsView);
+        });
     }
 }
