@@ -1,9 +1,11 @@
 package org.example.view;
 
+import org.example.model.GridModelObserver;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class GridView implements View {
+public class GridView implements View, GridModelObserver {
     private final JPanel panel;
     private final int rows;
     private final int cols;
@@ -33,5 +35,14 @@ public class GridView implements View {
     @Override
     public JPanel getPanel() {
         return panel;
+    }
+
+    @Override
+    public void onGridUpdate(boolean[][] grid) {
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < cols; x++) {
+                updateCell(x, y, grid[y][x]);
+            }
+        }
     }
 }
