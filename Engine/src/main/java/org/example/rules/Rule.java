@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.rules;
 
 public interface Rule {
     boolean computeNextState(boolean currentStatus, int aliveNeighbours);

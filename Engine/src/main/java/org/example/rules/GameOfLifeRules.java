@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.rules;
 
 public class GameOfLifeRules implements Rule {
     @Override

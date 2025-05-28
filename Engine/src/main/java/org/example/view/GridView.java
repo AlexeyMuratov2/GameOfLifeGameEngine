@@ -4,12 +4,21 @@ import org.example.model.GridModelObserver;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GridView implements View, GridModelObserver {
     private final JPanel panel;
     private final int rows;
     private final int cols;
     private final JPanel[][] cells;
+
+    // Интерфейс-обработчик кликов
+    public interface CellClickListener {
+        void onCellClicked(int row, int col);
+    }
+
+    private CellClickListener cellClickListener;
 
     public GridView(int rows, int cols) {
         this.rows = rows;
@@ -19,9 +28,22 @@ public class GridView implements View, GridModelObserver {
 
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < cols; x++) {
+                final int row = y;
+                final int col = x;
+
                 JPanel cell = new JPanel();
                 cell.setBackground(Color.WHITE);
                 cell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+                cell.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        if (cellClickListener != null) {
+                            cellClickListener.onCellClicked(row, col);
+                        }
+                    }
+                });
+
                 cells[y][x] = cell;
                 panel.add(cell);
             }
@@ -35,6 +57,10 @@ public class GridView implements View, GridModelObserver {
     @Override
     public JPanel getPanel() {
         return panel;
+    }
+
+    public void setCellClickListener(CellClickListener listener) {
+        this.cellClickListener = listener;
     }
 
     @Override

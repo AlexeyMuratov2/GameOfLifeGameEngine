@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.example.rules.Rule;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,15 @@ public class GridModel {
     public void setCell(int x, int y, boolean alive) {
         grid[y][x] = alive;
         notifyObservers();
+    }
+
+    public void toggleCell(int row, int col) {
+        grid[row][col] = !grid[row][col];
+        notifyObservers(); // или вызвать обновление вручную
+    }
+
+    public boolean isValidCell(int row, int col) {
+        return row >= 0 && row < grid.length && col >= 0 && col < grid[0].length;
     }
 
     public void setRule(Rule rule) {
