@@ -59,6 +59,11 @@ public class GridView implements View, GridModelObserver {
         return panel;
     }
 
+    public JPanel getCellPanel(int row, int col) {
+        return cells[row][col];
+    }
+
+
     public void setCellClickListener(CellClickListener listener) {
         this.cellClickListener = listener;
     }

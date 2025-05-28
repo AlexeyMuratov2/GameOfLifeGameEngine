@@ -32,5 +32,4 @@ public class RuleEditorView implements View{
     public JButton getApplyButton() {
         return applyButton;
     }
-
 }

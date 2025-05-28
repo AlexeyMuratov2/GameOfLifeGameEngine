@@ -23,9 +23,11 @@ public class GridModel {
         return grid[y][x];
     }
 
-    public void setCell(int x, int y, boolean alive) {
-        grid[y][x] = alive;
-        notifyObservers();
+    public void setCell(int row, int col, boolean alive) {
+        if (isValidCell(row, col)) {
+            grid[row][col] = alive;
+            notifyObservers();
+        }
     }
 
     public void toggleCell(int row, int col) {
@@ -56,6 +58,13 @@ public class GridModel {
         }
     }
 
+
+
+    public boolean isCellAlive(int row, int col) {
+        return isValidCell(row, col) && grid[row][col];
+    }
+
+
     public void nextGeneration() {
         boolean[][] next = new boolean[rows][cols];
         for (int y = 0; y < rows; y++) {
@@ -79,6 +88,7 @@ public class GridModel {
                 }
             }
         }
+        if (count != 0){System.out.println(count);}
         return count;
     }
 
@@ -88,5 +98,14 @@ public class GridModel {
             System.arraycopy(grid[y], 0, snapshot[y], 0, cols);
         }
         return snapshot;
+    }
+
+    public int getRowCount() {
+        return rows;
+    }
+
+
+    public int getColCount() {
+        return cols;
     }
 }

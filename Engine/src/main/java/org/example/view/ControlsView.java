@@ -33,5 +33,4 @@ public class ControlsView implements View {
     public JButton getStopButton() { return stopButton; }
     public JButton getStepButton() { return stepButton; }
     public JComboBox<String> getRuleSelector() { return ruleSelector; }
-
 }

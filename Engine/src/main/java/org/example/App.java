@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.controller.GridClickController;
+import org.example.controller.SimulationController;
 import org.example.model.*;
 import org.example.rules.GameOfLifeRules;
 import org.example.rules.Rule;
@@ -17,6 +18,8 @@ public class App {
             RuleEditorView ruleEditorView = new RuleEditorView();
             ControlsView controlsView = new ControlsView();
 
+            new SimulationController(model, controlsView);
+//            new GridController(model, gridView);
             new GridClickController(model, gridView);
 //            new RuleController(model, ruleEditorView, controlsView);
 
