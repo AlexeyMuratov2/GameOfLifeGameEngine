@@ -1,36 +1,44 @@
 package org.example;
 
 import org.example.controller.*;
-import org.example.db.AppConfig;
-import org.example.db.BoardSaveRepository;
-import org.example.db.CustomRuleRepository;
+import org.example.db.*;
 import org.example.model.*;
-import org.example.rules.GameOfLifeRules;
-import org.example.rules.Rule;
-import org.example.rules.RuleFactory;
+import org.example.rules.*;
 import org.example.view.*;
+import org.example.view.menu.MainMenuPanel;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.ApplicationContext;
 
 import javax.swing.*;
 
 public class App {
+    private static ApplicationContext context;
+    private static GridModel model;
+    private static GridView gridView;
+    private static ControlsView controlsView;
+    private static MainView mainView;
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            var context = new AnnotationConfigApplicationContext(AppConfig.class);
+            context = new AnnotationConfigApplicationContext(AppConfig.class);
 
             CustomRuleRepository customRuleRepo = context.getBean(CustomRuleRepository.class);
             BoardSaveRepository boardSaveRepo = context.getBean(BoardSaveRepository.class);
 
-            Rule rule = new GameOfLifeRules();
-            GridModel model = new GridModel(30, 30, rule);
-
             RuleFactory.init(customRuleRepo);
 
-            GridView gridView = new GridView(30, 30);
-            ControlsView controlsView = new ControlsView();
-            MainView mainView = new MainView(gridView, controlsView);
+            Rule initialRule = new GameOfLifeRules();
+            model = new GridModel(30, 30, initialRule);
+
+            gridView = new GridView(30, 30);
+            controlsView = new ControlsView();
+            mainView = new MainView(gridView, controlsView);
             JFrame frame = mainView.getFrame();
             RuleEditorView ruleEditorView = new RuleEditorView(frame);
+
+            MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, boardSaveRepo, customRuleRepo);
+            frame.setContentPane(mainMenuPanel);
+            frame.revalidate();
 
             new SimulationController(model, controlsView);
             new ControlsController(model, controlsView, customRuleRepo);
@@ -39,6 +47,23 @@ public class App {
             new SaveController(model, controlsView, frame, boardSaveRepo);
 
             model.addObserver(gridView);
+
+            frame.setVisible(true);
+
         });
     }
+
+    public static void startGame(int rows, int cols, String ruleName) {
+        Rule rule = RuleFactory.getInstance().fromString(ruleName);
+        model.reset(rows, cols, rule);
+        gridView.rebuild(rows, cols);
+        mainView.getFrame().setContentPane(mainView.getMainPanel());
+        mainView.getFrame().revalidate();
+        model.notifyObservers();
+    }
+
+    public static ApplicationContext getContext() {
+        return context;
+    }
 }
+

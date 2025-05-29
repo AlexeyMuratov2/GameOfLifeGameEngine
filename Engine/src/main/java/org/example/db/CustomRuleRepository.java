@@ -34,4 +34,14 @@ public class CustomRuleRepository {
         return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("name"));
     }
 
+    public List<String> findAllCustomRules() {
+        String sql = "SELECT name FROM custom_rules";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("name"));
+    }
+
+    public void deleteCustomRule(String ruleName) {
+        String sql = "DELETE FROM custom_rules WHERE name = ?";
+        jdbcTemplate.update(sql, ruleName);
+    }
+
 }

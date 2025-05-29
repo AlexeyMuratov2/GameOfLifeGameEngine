@@ -9,9 +9,9 @@ import java.awt.event.MouseEvent;
 
 public class GridView implements View, GridModelObserver {
     private final JPanel panel;
-    private final int rows;
-    private final int cols;
-    private final JPanel[][] cells;
+    private int rows;
+    private int cols;
+    private JPanel[][] cells;
 
     // Интерфейс-обработчик кликов
     public interface CellClickListener {
@@ -67,6 +67,41 @@ public class GridView implements View, GridModelObserver {
     public void setCellClickListener(CellClickListener listener) {
         this.cellClickListener = listener;
     }
+
+    public void rebuild(int newRows, int newCols) {
+        panel.removeAll();
+        panel.setLayout(new GridLayout(newRows, newCols));
+        this.rows = newRows;
+        this.cols = newCols;
+        JPanel[][] newCells = new JPanel[newRows][newCols];
+
+        for (int y = 0; y < newRows; y++) {
+            for (int x = 0; x < newCols; x++) {
+                final int row = y;
+                final int col = x;
+
+                JPanel cell = new JPanel();
+                cell.setBackground(Color.WHITE);
+                cell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+                cell.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        if (cellClickListener != null) {
+                            cellClickListener.onCellClicked(row, col);
+                        }
+                    }
+                });
+
+                newCells[y][x] = cell;
+                panel.add(cell);
+            }
+        }
+        this.cells = newCells;
+        panel.revalidate();
+        panel.repaint();
+    }
+
 
     @Override
     public void onGridUpdate(boolean[][] grid) {

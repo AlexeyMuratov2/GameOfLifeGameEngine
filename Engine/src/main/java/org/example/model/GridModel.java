@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GridModel {
-    private final int rows;
-    private final int cols;
+    private int rows;
+    private int cols;
     private boolean[][] grid;
     private Rule rule;
     List<GridModelObserver> observers = new ArrayList<>();
@@ -104,6 +104,13 @@ public class GridModel {
         return rows;
     }
 
+    public void reset(int newRows, int newCols, Rule newRule) {
+        this.rows = newRows;
+        this.cols = newCols;
+        this.rule = newRule;
+        this.grid = new boolean[rows][cols];
+        notifyObservers();
+    }
 
     public int getCols() {
         return cols;
