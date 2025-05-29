@@ -43,9 +43,10 @@ public class MainMenuPanel extends JPanel {
             row.add(new JLabel(String.format("Name: %s, Size: %dx%d, Rule: %s", save.getName(), save.getRows(), save.getCols(), save.getRuleName())));
             JButton playButton = new JButton("Play");
             playButton.addActionListener(e -> {
-                System.out.println(save.getRows() + " " + save.getCols() + " " + save.getRuleName());
-                App.startGame(save.getRows(), save.getCols(), save.getRuleName());
+                List<int[]> liveCells = boardSaveRepository.loadLiveCellsBySaveId(save.getId());
+                App.startGame(save.getRows(), save.getCols(), save.getRuleName(), liveCells);
             });
+
             row.add(playButton);
             saveListPanel.add(row);
         }

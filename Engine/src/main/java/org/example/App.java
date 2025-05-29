@@ -10,6 +10,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.ApplicationContext;
 
 import javax.swing.*;
+import java.util.List;
 
 public class App {
     private static ApplicationContext context;
@@ -53,14 +54,22 @@ public class App {
         });
     }
 
-    public static void startGame(int rows, int cols, String ruleName) {
+    public static void startGame(int rows, int cols, String ruleName, List<int[]> liveCells) {
         Rule rule = RuleFactory.getInstance().fromString(ruleName);
         model.reset(rows, cols, rule);
+        for (int[] cell : liveCells) {
+            model.setCell(cell[0], cell[1], true);
+        }
         gridView.rebuild(rows, cols);
         mainView.getFrame().setContentPane(mainView.getMainPanel());
         mainView.getFrame().revalidate();
         model.notifyObservers();
     }
+
+    public static void startGame(int rows, int cols, String ruleName) {
+        startGame(rows, cols, ruleName, List.of());
+    }
+
 
     public static ApplicationContext getContext() {
         return context;
