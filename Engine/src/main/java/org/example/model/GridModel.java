@@ -100,12 +100,16 @@ public class GridModel {
         return snapshot;
     }
 
-    public int getRowCount() {
+    public int getRows() {
         return rows;
     }
 
 
-    public int getColCount() {
+    public int getCols() {
         return cols;
+    }
+
+    public Rule getRule() {
+        return rule;
     }
 }

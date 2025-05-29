@@ -5,4 +5,9 @@ public class SeedsRule implements Rule {
     public boolean computeNextState(boolean currentStatus, int aliveNeighbours) {
         return !currentStatus && aliveNeighbours == 2;
     }
+
+    @Override
+    public String getName() {
+        return "Seeds";
+    }
 }

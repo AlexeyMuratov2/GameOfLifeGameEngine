@@ -11,4 +11,9 @@ public class DayAndNightRule implements Rule {
                     aliveNeighbours == 7 || aliveNeighbours == 8;
         }
     }
+
+    @Override
+    public String getName() {
+        return "Day & Night";
+    }
 }

@@ -9,4 +9,9 @@ public class GameOfLifeRules implements Rule {
             return aliveNeighbours == 3;
         }
     }
+
+    @Override
+    public String getName() {
+        return "Game of Life";
+    }
 }

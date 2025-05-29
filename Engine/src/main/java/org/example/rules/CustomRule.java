@@ -6,8 +6,10 @@ import java.util.Set;
 public class CustomRule implements Rule {
     private final Set<Integer> birthConditions = new HashSet<>();
     private final Set<Integer> survivalConditions = new HashSet<>();
+    private final String ruleName;
 
-    public CustomRule(String ruleText) {
+    public CustomRule(String ruleName, String ruleText) {
+        this.ruleName = ruleName.trim();
         parseRule(ruleText);
     }
 
@@ -36,5 +38,10 @@ public class CustomRule implements Rule {
         } else {
             return birthConditions.contains(aliveNeighbours);
         }
+    }
+
+    @Override
+    public String getName() {
+        return "";
     }
 }

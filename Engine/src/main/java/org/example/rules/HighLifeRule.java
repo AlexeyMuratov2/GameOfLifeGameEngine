@@ -9,4 +9,9 @@ public class HighLifeRule implements Rule {
             return aliveNeighbours == 3 || aliveNeighbours == 6;
         }
     }
+
+    @Override
+    public String getName() {
+        return "HighLife";
+    }
 }

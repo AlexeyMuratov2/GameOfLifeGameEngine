@@ -39,7 +39,7 @@ public class RuleFactory {
                 return new DayAndNightRule();
             default:
                 System.out.println(rule.trim());
-                if (repository.ruleExists(rule.trim())) return new CustomRule(repository.loadRuleByName(rule.trim()));
+                if (repository.ruleExists(rule.trim())) return new CustomRule(rule.trim(),repository.loadRuleByName(rule.trim()));
                 throw new IllegalArgumentException("Unknown rule: " + rule);
         }
     }
