@@ -6,6 +6,7 @@ import org.example.db.CustomRuleRepository;
 import org.example.model.*;
 import org.example.rules.GameOfLifeRules;
 import org.example.rules.Rule;
+import org.example.rules.RuleFactory;
 import org.example.view.*;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -21,6 +22,8 @@ public class App {
             Rule rule = new GameOfLifeRules();
             GridModel model = new GridModel(30, 30, rule);
 
+            RuleFactory.init(customRuleRepo);
+
             GridView gridView = new GridView(30, 30);
             ControlsView controlsView = new ControlsView();
 
@@ -32,7 +35,7 @@ public class App {
             new SimulationController(model, controlsView);
             new ControlsController(model, controlsView);
             new GridClickController(model, gridView);
-            new RuleController(model, ruleEditorView, controlsView);
+            new RuleController(model, ruleEditorView, controlsView, customRuleRepo);
 
             model.addObserver(gridView);
         });

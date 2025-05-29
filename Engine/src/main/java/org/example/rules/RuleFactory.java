@@ -1,7 +1,31 @@
 package org.example.rules;
 
+import org.example.db.CustomRuleRepository;
+
 public class RuleFactory {
-    public static Rule fromString(String rule) {
+    private static RuleFactory instance;
+
+    private final CustomRuleRepository repository;
+
+    private RuleFactory(CustomRuleRepository repository) {
+        this.repository = repository;
+    }
+
+    public static void init(CustomRuleRepository repository) {
+        if (instance == null) {
+            instance = new RuleFactory(repository);
+        }
+    }
+
+    public static RuleFactory getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("RuleFactory is not initialized. Call init() first.");
+        }
+        return instance;
+    }
+
+
+    public Rule fromString(String rule) {
         switch (rule.trim().toLowerCase()) {
             case "game of life":
             case "life":
@@ -14,7 +38,9 @@ public class RuleFactory {
             case "day and night":
                 return new DayAndNightRule();
             default:
-                return new CustomRule(rule.trim().toLowerCase());
+                System.out.println(rule.trim());
+                if (repository.ruleExists(rule.trim())) return new CustomRule(repository.loadRuleByName(rule.trim()));
+                throw new IllegalArgumentException("Unknown rule: " + rule);
         }
     }
 }

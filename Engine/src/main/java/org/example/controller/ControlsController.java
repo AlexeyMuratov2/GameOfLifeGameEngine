@@ -10,7 +10,7 @@ public class ControlsController {
         controlsView.getRuleSelector().addActionListener(e -> {
             String selectedRule = (String) controlsView.getRuleSelector().getSelectedItem();
             if (selectedRule != null) {
-                Rule rule = RuleFactory.fromString(selectedRule);
+                Rule rule = RuleFactory.getInstance().fromString(selectedRule);
                 model.setRule(rule);
             }
         });
