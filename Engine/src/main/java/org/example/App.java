@@ -33,7 +33,7 @@ public class App {
             RuleEditorView ruleEditorView = new RuleEditorView(frame);
 
             new SimulationController(model, controlsView);
-            new ControlsController(model, controlsView);
+            new ControlsController(model, controlsView, customRuleRepo);
             new GridClickController(model, gridView);
             new RuleController(model, ruleEditorView, controlsView, customRuleRepo);
 

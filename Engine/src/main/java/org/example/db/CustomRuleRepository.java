@@ -3,6 +3,8 @@ package org.example.db;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class CustomRuleRepository {
     private final JdbcTemplate jdbcTemplate;
@@ -26,4 +28,10 @@ public class CustomRuleRepository {
         Integer count = jdbcTemplate.queryForObject(sql, new Object[]{name}, Integer.class);
         return count != null && count > 0;
     }
+
+    public List<String> findAllRuleNames() {
+        String sql = "SELECT name FROM custom_rules";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("name"));
+    }
+
 }
