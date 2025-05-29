@@ -16,7 +16,7 @@ public class ControlsView implements View {
         startButton = new JButton("▶ Start");
         stopButton = new JButton("⏸ Stop");
         stepButton = new JButton("⏭ Step");
-        ruleSelector = new JComboBox<>(new String[]{"Game of Life", "HighLife","Day & Night", "Seeds", "Custom"});
+        ruleSelector = new JComboBox<>(new String[]{"Game of Life", "HighLife","Day & Night", "Seeds"});
 
         panel.add(startButton);
         panel.add(stopButton);
