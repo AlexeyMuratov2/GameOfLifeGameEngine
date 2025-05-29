@@ -3,26 +3,22 @@ package org.example.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainView extends JFrame {
-    private final GridView gridView;
-    private final RuleEditorView ruleEditorView;
-    private final ControlsView controlsView;
+public class MainView {
+    private final JFrame frame;
 
-    public MainView(GridView gridView, RuleEditorView ruleEditorView, ControlsView controlsView) {
-        super("Клеточный автомат");
+    public MainView(GridView gridView, ControlsView controlsView) {
+        frame = new JFrame("Conway's Game of Life");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
 
-        this.gridView = gridView;
-        this.ruleEditorView = ruleEditorView;
-        this.controlsView = controlsView;
+        frame.add(gridView.getPanel(), BorderLayout.CENTER);
+        frame.add(controlsView.getPanel(), BorderLayout.SOUTH);
 
-        setLayout(new BorderLayout());
-        add(gridView.getPanel(), BorderLayout.CENTER);
-        add(ruleEditorView.getPanel(), BorderLayout.EAST);
-        add(controlsView.getPanel(), BorderLayout.SOUTH);
+        frame.setSize(800, 800);
+        frame.setVisible(true);
+    }
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 700);
-        setLocationRelativeTo(null);
-        setVisible(true);
+    public JFrame getFrame() {
+        return frame;
     }
 }

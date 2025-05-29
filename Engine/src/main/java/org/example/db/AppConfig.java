@@ -15,7 +15,7 @@ public class AppConfig {
     public DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/oop?useSSL=false&serverTimezone=UTC");
+        ds.setUrl("jdbc:mysql://localhost:3306/greed_db?useSSL=false&serverTimezone=UTC");
         ds.setUsername("root");
         ds.setPassword("root");
         return ds;

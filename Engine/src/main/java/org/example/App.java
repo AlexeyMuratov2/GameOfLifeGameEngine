@@ -1,34 +1,40 @@
 package org.example;
 
-import org.example.controller.ControlsController;
-import org.example.controller.GridClickController;
-import org.example.controller.RuleController;
-import org.example.controller.SimulationController;
+import org.example.controller.*;
+import org.example.db.AppConfig;
+import org.example.db.CustomRuleRepository;
 import org.example.model.*;
 import org.example.rules.GameOfLifeRules;
 import org.example.rules.Rule;
 import org.example.view.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import javax.swing.*;
 
 public class App {
     public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeLater(() -> {
+            var context = new AnnotationConfigApplicationContext(AppConfig.class);
+
+            CustomRuleRepository customRuleRepo = context.getBean(CustomRuleRepository.class);
+
             Rule rule = new GameOfLifeRules();
             GridModel model = new GridModel(30, 30, rule);
 
             GridView gridView = new GridView(30, 30);
-            RuleEditorView ruleEditorView = new RuleEditorView();
             ControlsView controlsView = new ControlsView();
+
+            MainView mainView = new MainView(gridView, controlsView);
+            JFrame frame = mainView.getFrame();
+
+            RuleEditorView ruleEditorView = new RuleEditorView(frame);
 
             new SimulationController(model, controlsView);
             new ControlsController(model, controlsView);
-//            new GridController(model, gridView);
             new GridClickController(model, gridView);
-            new RuleController(model, ruleEditorView);
+            new RuleController(model, ruleEditorView, controlsView);
 
             model.addObserver(gridView);
-
-            new MainView(gridView, ruleEditorView, controlsView);
         });
     }
 }
