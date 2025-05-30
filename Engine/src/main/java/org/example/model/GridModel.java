@@ -3,6 +3,7 @@ package org.example.model;
 import org.example.rules.Rule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GridModel {
@@ -135,6 +136,25 @@ public class GridModel {
         this.grid = new boolean[rows][cols];
         notifyObservers();
     }
+
+    public void resize(int newRows, int newCols) {
+        this.rows = newRows;
+        this.cols = newCols;
+        this.grid = new boolean[rows][cols];
+    }
+
+    public void clear() {
+        for (int row = 0; row < rows; row++) {
+            Arrays.fill(grid[row], false);
+        }
+    }
+
+    public void setCellAlive(int row, int col, boolean alive) {
+        if (row >= 0 && row < rows && col >= 0 && col < cols) {
+            grid[row][col] = alive;
+        }
+    }
+
 
     public int getCols() {
         return cols;

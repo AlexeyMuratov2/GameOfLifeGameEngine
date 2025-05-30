@@ -68,6 +68,8 @@ public class App {
         new SaveController(model, controlsView, frame, boardSaveRepo, mainView.getSaveListPanel());
         new ReturnToMenuController(controlsView);
         new UndoController(model, controlsView);
+        new FigureInsertionController(model, gridView, mainView.getSaveListPanel(), new BoardSaveLoader(boardSaveRepo));
+//        new LoadController(mainView.getSaveListPanel(), model, gridView, RuleFactory.getInstance(), boardSaveRepo);
 
         model.addObserver(gridView);
 

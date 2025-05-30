@@ -18,6 +18,7 @@ public class SaveListPanel extends JPanel {
         saveJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         saveJList.setCellRenderer(new SaveListCellRenderer());
 
+
         JScrollPane scrollPane = new JScrollPane(saveJList);
         this.add(new JLabel("Saved figures:"), BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);

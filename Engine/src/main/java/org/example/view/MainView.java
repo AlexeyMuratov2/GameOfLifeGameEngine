@@ -21,6 +21,8 @@ public class MainView {
         gamePanel.add(controlsView.getPanel(), BorderLayout.SOUTH);
 
         gamePanel.add(saveListPanel, BorderLayout.EAST);
+
+        
     }
 
     public JFrame getFrame() {

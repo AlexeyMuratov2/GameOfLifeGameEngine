@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.function.Consumer;
 
 public class GridView implements View, GridModelObserver {
     private final JPanel panel;
@@ -49,6 +50,10 @@ public class GridView implements View, GridModelObserver {
     public void updateCell(int x, int y, boolean alive) {
         cells[y][x].setBackground(alive ? Color.BLACK : Color.WHITE);
         cells[y][x].repaint();
+    }
+
+    public void updateSize(int rows, int cols) {
+        rebuild(rows, cols);
     }
 
     @Override
