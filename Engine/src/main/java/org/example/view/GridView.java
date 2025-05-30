@@ -35,14 +35,6 @@ public class GridView implements View, GridModelObserver {
                 cell.setBackground(Color.WHITE);
                 cell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-                cell.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        if (cellClickListener != null) {
-                            cellClickListener.onCellClicked(row, col);
-                        }
-                    }
-                });
 
                 cells[y][x] = cell;
                 panel.add(cell);
@@ -50,8 +42,13 @@ public class GridView implements View, GridModelObserver {
         }
     }
 
+    public void enableDrawingSupport() {
+        panel.setFocusable(true); // На всякий случай
+    }
+
     public void updateCell(int x, int y, boolean alive) {
         cells[y][x].setBackground(alive ? Color.BLACK : Color.WHITE);
+        cells[y][x].repaint();
     }
 
     @Override
@@ -84,14 +81,6 @@ public class GridView implements View, GridModelObserver {
                 cell.setBackground(Color.WHITE);
                 cell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-                cell.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        if (cellClickListener != null) {
-                            cellClickListener.onCellClicked(row, col);
-                        }
-                    }
-                });
 
                 newCells[y][x] = cell;
                 panel.add(cell);
@@ -102,6 +91,25 @@ public class GridView implements View, GridModelObserver {
         panel.repaint();
     }
 
+    public int[] getCellFromMousePosition(int x, int y) {
+        int panelWidth = panel.getWidth();
+        int panelHeight = panel.getHeight();
+
+        if (rows == 0 || cols == 0) return null;
+
+        int cellWidth = panelWidth / cols;
+        int cellHeight = panelHeight / rows;
+
+        int col = x / cellWidth;
+        int row = y / cellHeight;
+
+        if (row >= 0 && row < rows && col >= 0 && col < cols) {
+            return new int[]{row, col};
+        }
+        return null;
+    }
+
+
 
     @Override
     public void onGridUpdate(boolean[][] grid) {
@@ -111,4 +119,13 @@ public class GridView implements View, GridModelObserver {
             }
         }
     }
+
+    public int getRowCount() {
+        return rows;
+    }
+
+    public int getColCount() {
+        return cols;
+    }
+
 }

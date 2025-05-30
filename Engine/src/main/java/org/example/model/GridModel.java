@@ -95,7 +95,6 @@ public class GridModel {
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < cols; x++) {
                 int aliveNeighbors = countAliveNeighbors(x, y);
-                System.out.println(rule);
                 next[y][x] = rule.computeNextState(grid[y][x], aliveNeighbors);
             }
         }
