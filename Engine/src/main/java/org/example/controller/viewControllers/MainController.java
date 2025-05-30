@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controller.viewControllers;
 
 import org.example.view.MainView;
 

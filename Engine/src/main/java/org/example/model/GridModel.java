@@ -11,12 +11,36 @@ public class GridModel {
     private boolean[][] grid;
     private Rule rule;
     List<GridModelObserver> observers = new ArrayList<>();
+    private final GridHistoryManager historyManager = new GridHistoryManager();
 
     public GridModel(int rows, int cols, Rule rule) {
         this.rows = rows;
         this.cols = cols;
         this.rule = rule;
         this.grid = new boolean[rows][cols];
+    }
+
+    public GridMemento createMemento() {
+        return new GridMemento(this.grid);
+    }
+
+    public void restoreFromMemento(GridMemento memento) {
+        boolean[][] restoredGrid = memento.getSavedState();
+        int rows = restoredGrid.length;
+        int cols = restoredGrid[0].length;
+
+        // Обновляем текущую сетку
+        this.grid = new boolean[rows][cols];
+        for (int y = 0; y < rows; y++) {
+            System.arraycopy(restoredGrid[y], 0, this.grid[y], 0, cols);
+        }
+
+        // Уведомить представление
+        notifyObservers();
+    }
+
+    public GridHistoryManager getHistoryManager() {
+        return historyManager;
     }
 
     public boolean getCell(int x, int y) {
@@ -67,6 +91,7 @@ public class GridModel {
 
     public void nextGeneration() {
         boolean[][] next = new boolean[rows][cols];
+
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < cols; x++) {
                 int aliveNeighbors = countAliveNeighbors(x, y);

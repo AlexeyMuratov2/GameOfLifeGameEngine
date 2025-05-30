@@ -7,11 +7,11 @@ public class MainView {
     private final JFrame frame;
     private final JPanel gamePanel;
 
-    public MainView(GridView gridView, ControlsView controlsView) {
-        frame = new JFrame("Conway's Game of Life");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 800);
-        frame.setLocationRelativeTo(null); // Центрируем окно
+    public MainView(JFrame frame, GridView gridView, ControlsView controlsView) {
+        this.frame = frame;
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setSize(800, 800);
+        this.frame.setLocationRelativeTo(null); // Центрируем окно
 
         // Собираем игровую панель, но пока не добавляем в frame
         gamePanel = new JPanel(new BorderLayout());

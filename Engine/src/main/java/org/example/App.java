@@ -1,11 +1,12 @@
 package org.example;
 
 import org.example.controller.*;
+import org.example.controller.viewControllers.MainMenuController;
+import org.example.controller.viewControllers.ReturnToMenuController;
 import org.example.db.*;
 import org.example.model.*;
 import org.example.rules.*;
 import org.example.view.*;
-import org.example.view.menu.MainMenuPanel;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.ApplicationContext;
 
@@ -18,6 +19,8 @@ public class App {
     private static GridView gridView;
     private static ControlsView controlsView;
     private static MainView mainView;
+    private static JFrame frame;
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -28,44 +31,60 @@ public class App {
 
             RuleFactory.init(customRuleRepo);
 
-            Rule initialRule = new GameOfLifeRules();
-            model = new GridModel(30, 30, initialRule);
+            // Только меню
+            frame = new JFrame("Game of Life");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(800, 600);
 
-            gridView = new GridView(30, 30);
-            controlsView = new ControlsView();
-            mainView = new MainView(gridView, controlsView);
-            JFrame frame = mainView.getFrame();
-            RuleEditorView ruleEditorView = new RuleEditorView(frame);
 
-            MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, boardSaveRepo, customRuleRepo);
-            frame.setContentPane(mainMenuPanel);
-            frame.revalidate();
-
-            new SimulationController(model, controlsView);
-            new ControlsController(model, controlsView, customRuleRepo);
-            new GridClickController(model, gridView);
-            new RuleController(model, ruleEditorView, controlsView, customRuleRepo);
-            new SaveController(model, controlsView, frame, boardSaveRepo);
-            new ReturnToMenuController(controlsView);
-
-            model.addObserver(gridView);
+            MainMenuController menuController = new MainMenuController(frame, boardSaveRepo, customRuleRepo);
+            frame.setContentPane(menuController.getViewPanel());
 
             frame.setVisible(true);
-
         });
     }
 
     public static void startGame(int rows, int cols, String ruleName, List<int[]> liveCells) {
         Rule rule = RuleFactory.getInstance().fromString(ruleName);
-        model.reset(rows, cols, rule);
+
+        // Создаём модель и вью с актуальными размерами
+        model = new GridModel(rows, cols, rule);
+        gridView = new GridView(rows, cols);
+        controlsView = new ControlsView();
+        mainView = new MainView(frame, gridView, controlsView);
+
+
+        JFrame frame = mainView.getFrame();
+
+        // Контроллеры (создаются только после создания всех view/model)
+        CustomRuleRepository customRuleRepo = context.getBean(CustomRuleRepository.class);
+        BoardSaveRepository boardSaveRepo = context.getBean(BoardSaveRepository.class);
+
+        RuleEditorView ruleEditorView = new RuleEditorView(frame);
+
+        new SimulationController(model, controlsView);
+        new ControlsController(model, controlsView, customRuleRepo);
+        new GridClickController(model, gridView);
+        new RuleController(model, ruleEditorView, controlsView, customRuleRepo);
+        new SaveController(model, controlsView, frame, boardSaveRepo);
+        new ReturnToMenuController(controlsView);
+        new UndoController(model, controlsView);
+
+        model.addObserver(gridView);
+
+        // Загружаем клетки, если они есть
         for (int[] cell : liveCells) {
             model.setCell(cell[0], cell[1], true);
         }
-        gridView.rebuild(rows, cols);
-        mainView.getFrame().setContentPane(mainView.getMainPanel());
-        mainView.getFrame().revalidate();
+
+        frame.setContentPane(mainView.getMainPanel());
+        frame.revalidate();
+        frame.repaint();
+
+        frame.setVisible(true);
         model.notifyObservers();
     }
+
 
     public static void startGame(int rows, int cols, String ruleName) {
         startGame(rows, cols, ruleName, List.of());
