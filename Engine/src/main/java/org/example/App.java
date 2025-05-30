@@ -19,6 +19,7 @@ public class App {
     private static GridView gridView;
     private static ControlsView controlsView;
     private static MainView mainView;
+    private static SaveListPanel saveListPanel;
     private static JFrame frame;
 
 
@@ -31,11 +32,9 @@ public class App {
 
             RuleFactory.init(customRuleRepo);
 
-            // Только меню
             frame = new JFrame("Game of Life");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(800, 600);
-
 
             MainMenuController menuController = new MainMenuController(frame, boardSaveRepo, customRuleRepo);
             frame.setContentPane(menuController.getViewPanel());
@@ -51,8 +50,8 @@ public class App {
         model = new GridModel(rows, cols, rule);
         gridView = new GridView(rows, cols);
         controlsView = new ControlsView();
-        mainView = new MainView(frame, gridView, controlsView);
 
+        mainView = new MainView(frame, gridView, controlsView);
 
         JFrame frame = mainView.getFrame();
 
@@ -66,7 +65,7 @@ public class App {
         new ControlsController(model, controlsView, customRuleRepo);
         new GridClickController(model, gridView);
         new RuleController(model, ruleEditorView, controlsView, customRuleRepo);
-        new SaveController(model, controlsView, frame, boardSaveRepo);
+        new SaveController(model, controlsView, frame, boardSaveRepo, mainView.getSaveListPanel());
         new ReturnToMenuController(controlsView);
         new UndoController(model, controlsView);
 
@@ -83,6 +82,10 @@ public class App {
 
         frame.setVisible(true);
         model.notifyObservers();
+
+        SaveListPanel saveListPanel = mainView.getSaveListPanel();
+        List<BoardSaveMeta> saves = boardSaveRepo.listAllSaves();
+        saveListPanel.setSaves(saves);
     }
 
 

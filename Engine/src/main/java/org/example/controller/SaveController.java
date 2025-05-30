@@ -1,16 +1,20 @@
 package org.example.controller;
 
+import org.example.db.BoardSaveMeta;
 import org.example.db.BoardSaveRepository;
 import org.example.model.GridModel;
 import org.example.view.ControlsView;
 import org.example.view.SaveDialogView;
+import org.example.view.SaveListPanel;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SaveController {
-    public SaveController(GridModel model, ControlsView controlsView, JFrame parentFrame, BoardSaveRepository repository) {
+    public SaveController(GridModel model, ControlsView controlsView, JFrame parentFrame,
+                          BoardSaveRepository repository, SaveListPanel saveListPanel) {
+
         SaveDialogView saveDialog = new SaveDialogView(parentFrame);
 
         controlsView.getSaveButton().addActionListener(e -> saveDialog.show());
@@ -38,6 +42,10 @@ public class SaveController {
             repository.saveBoard(name, ruleName, rows, cols, liveCells);
             saveDialog.close();
             JOptionPane.showMessageDialog(parentFrame, "Game saved!");
+
+            // Обновляем список сохранений
+            List<BoardSaveMeta> updatedSaves = repository.listAllSaves();
+            saveListPanel.setSaves(updatedSaves);
         });
     }
 }
