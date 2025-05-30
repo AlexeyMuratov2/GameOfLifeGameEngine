@@ -46,6 +46,7 @@ public class App {
             new GridClickController(model, gridView);
             new RuleController(model, ruleEditorView, controlsView, customRuleRepo);
             new SaveController(model, controlsView, frame, boardSaveRepo);
+            new ReturnToMenuController(controlsView);
 
             model.addObserver(gridView);
 
@@ -73,6 +74,10 @@ public class App {
 
     public static ApplicationContext getContext() {
         return context;
+    }
+
+    public static MainView getMainView() {
+        return mainView;
     }
 }
 

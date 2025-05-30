@@ -10,6 +10,7 @@ public class ControlsView implements View {
     private final JButton stepButton;
     private final JComboBox<String> ruleSelector;
     private final JButton saveButton;
+    private final JButton returnButton;
 
     public ControlsView() {
         panel = new JPanel();
@@ -20,12 +21,14 @@ public class ControlsView implements View {
         ruleSelector = new JComboBox<>(new String[]{"Game of Life", "HighLife", "Day & Night", "Seeds"});
 
         saveButton = new JButton("💾 Save");
+        returnButton = new JButton("🔙 Return");
 
         panel.add(startButton);
         panel.add(stopButton);
         panel.add(stepButton);
         panel.add(ruleSelector);
         panel.add(saveButton);
+        panel.add(returnButton);
     }
 
     @Override
@@ -38,4 +41,5 @@ public class ControlsView implements View {
     public JButton getStepButton() { return stepButton; }
     public JComboBox<String> getRuleSelector() { return ruleSelector; }
     public JButton getSaveButton() { return saveButton; }
+    public JButton getReturnButton() { return returnButton; }
 }
