@@ -9,9 +9,6 @@ public class BoardSaveLoader {
         this.repository = repository;
     }
 
-    /**
-     * Загружает сетку сохранения как boolean[][] по идентификатору сохранения.
-     */
     public boolean[][] loadGridFromDatabase(int saveId) {
         BoardSaveMeta meta = repository.loadBoardMetaById(saveId);
         int rows = meta.getRows();

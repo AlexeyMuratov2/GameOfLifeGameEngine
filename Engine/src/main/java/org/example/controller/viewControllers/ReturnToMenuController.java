@@ -18,11 +18,9 @@ public class ReturnToMenuController {
                 return;
             }
 
-            // Получаем зависимости из контекста Spring
             BoardSaveRepository boardRepo = App.getContext().getBean(BoardSaveRepository.class);
             CustomRuleRepository ruleRepo = App.getContext().getBean(CustomRuleRepository.class);
 
-            // Используем MainMenuController, если он реализован по MVC
             MainMenuController mainMenuController = new MainMenuController(frame, boardRepo, ruleRepo);
             JPanel mainMenuView = mainMenuController.getViewPanel();
 

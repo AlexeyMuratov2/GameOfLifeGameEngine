@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.model.GridModel;
 import org.example.view.GridView;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -28,8 +29,10 @@ public class GridClickController {
         view.getPanel().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                isMousePressed = true;
-                determineDrawValueAndApply(e);
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    isMousePressed = true;
+                    determineDrawValueAndApply(e);
+                }
             }
 
             @Override
@@ -43,7 +46,7 @@ public class GridClickController {
         view.getPanel().addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (isMousePressed) {
+                if (isMousePressed && SwingUtilities.isLeftMouseButton(e)) {
                     applyDrawValue(e);
                 }
             }

@@ -16,7 +16,6 @@ public class CustomRule implements Rule {
     private void parseRule(String ruleText) {
         ruleText = ruleText.toUpperCase().trim();
         if (!ruleText.matches("B\\d*/S\\d*")) {
-            System.out.println(ruleText);
             throw new IllegalArgumentException("Invalid rule format. Use format like B3/S23");
         }
 

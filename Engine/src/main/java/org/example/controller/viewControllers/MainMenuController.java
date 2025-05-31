@@ -34,7 +34,6 @@ public class MainMenuController {
             int rows = Integer.parseInt(view.getRowsField().getText());
             int cols = Integer.parseInt(view.getColsField().getText());
             String rule = (String) view.getRuleBox().getSelectedItem();
-            System.out.println(rows + " " + cols + " " + rule);
             App.startGame(rows, cols, rule);
         });
 

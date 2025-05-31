@@ -30,13 +30,11 @@ public class GridModel {
         int rows = restoredGrid.length;
         int cols = restoredGrid[0].length;
 
-        // Обновляем текущую сетку
         this.grid = new boolean[rows][cols];
         for (int y = 0; y < rows; y++) {
             System.arraycopy(restoredGrid[y], 0, this.grid[y], 0, cols);
         }
 
-        // Уведомить представление
         notifyObservers();
     }
 

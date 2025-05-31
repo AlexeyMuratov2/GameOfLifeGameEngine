@@ -43,7 +43,6 @@ public class SaveController {
             saveDialog.close();
             JOptionPane.showMessageDialog(parentFrame, "Game saved!");
 
-            // Обновляем список сохранений
             List<BoardSaveMeta> updatedSaves = repository.listAllSaves();
             saveListPanel.setSaves(updatedSaves);
         });

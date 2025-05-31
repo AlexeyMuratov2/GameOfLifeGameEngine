@@ -29,7 +29,6 @@ public class FigureInsertionController {
         view.getPanel().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                // Проверим, правая ли кнопка
                 if (SwingUtilities.isRightMouseButton(e)) {
                     int[] cell = view.getCellFromMousePosition(e.getX(), e.getY());
                     if (cell == null) return;
@@ -40,7 +39,6 @@ public class FigureInsertionController {
                     BoardSaveMeta selectedSave = saveListPanel.getSelectedSave();
                     if (selectedSave == null) return;
 
-                    // Загрузим фигуру
                     boolean[][] loadedFigure = saveLoader.loadGridFromDatabase(selectedSave.getId());
 
                     insertFigure(startRow, startCol, loadedFigure);

@@ -4,7 +4,6 @@ public class GridMemento {
     private final boolean[][] snapshot;
 
     public GridMemento(boolean[][] state) {
-        // Глубокая копия массива
         int rows = state.length;
         int cols = state[0].length;
         this.snapshot = new boolean[rows][cols];
@@ -14,7 +13,6 @@ public class GridMemento {
     }
 
     public boolean[][] getSavedState() {
-        // Возвращаем копию для безопасности
         int rows = snapshot.length;
         int cols = snapshot[0].length;
         boolean[][] copy = new boolean[rows][cols];
