@@ -43,7 +43,6 @@ public class SaveListPanel extends JPanel {
         return saveJList;
     }
 
-    // Кастомный рендер для отображения с подсветкой
     private static class SaveListCellRenderer extends JLabel implements ListCellRenderer<BoardSaveMeta> {
         @Override
         public Component getListCellRendererComponent(JList<? extends BoardSaveMeta> list, BoardSaveMeta value, int index,

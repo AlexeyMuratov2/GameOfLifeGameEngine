@@ -46,7 +46,6 @@ public class App {
     public static void startGame(int rows, int cols, String ruleName, List<int[]> liveCells) {
         Rule rule = RuleFactory.getInstance().fromString(ruleName);
 
-        // Создаём модель и вью с актуальными размерами
         model = new GridModel(rows, cols, rule);
         gridView = new GridView(rows, cols);
         controlsView = new ControlsView();
@@ -55,7 +54,6 @@ public class App {
 
         JFrame frame = mainView.getFrame();
 
-        // Контроллеры (создаются только после создания всех view/model)
         CustomRuleRepository customRuleRepo = context.getBean(CustomRuleRepository.class);
         BoardSaveRepository boardSaveRepo = context.getBean(BoardSaveRepository.class);
 
@@ -69,11 +67,9 @@ public class App {
         new ReturnToMenuController(controlsView);
         new UndoController(model, controlsView);
         new FigureInsertionController(model, gridView, mainView.getSaveListPanel(), new BoardSaveLoader(boardSaveRepo));
-//        new LoadController(mainView.getSaveListPanel(), model, gridView, RuleFactory.getInstance(), boardSaveRepo);
 
         model.addObserver(gridView);
 
-        // Загружаем клетки, если они есть
         for (int[] cell : liveCells) {
             model.setCell(cell[0], cell[1], true);
         }

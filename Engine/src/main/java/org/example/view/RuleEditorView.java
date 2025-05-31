@@ -33,7 +33,6 @@ public class RuleEditorView {
 
         dialog.setContentPane(content);
 
-        // По нажатию "Save" диалог закрывается — остальную обработку делает контроллер
         saveButton.addActionListener(e -> dialog.setVisible(false));
     }
 

@@ -54,6 +54,11 @@ public class BoardSaveRepository {
         );
     }
 
+    public void deleteSaveById(int saveId) {
+        jdbcTemplate.update("DELETE FROM live_cells WHERE save_id = ?", saveId);
+        jdbcTemplate.update("DELETE FROM board_saves WHERE id = ?", saveId);
+    }
+
     public BoardSaveMeta loadBoardMetaById(int saveId) {
         return jdbcTemplate.queryForObject(
                 "SELECT id, name, rule_name, rows_num, cols_num, created_at FROM board_saves WHERE id = ?",

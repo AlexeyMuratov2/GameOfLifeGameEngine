@@ -14,6 +14,8 @@ public class MainMenuPanel extends JPanel {
     private final JButton startButton = new JButton("Start New Game");
     private final JButton manageRulesButton = new JButton("Manage Rules");
     private final JButton exitButton = new JButton("Exit");
+    private final JButton manageSavesButton = new JButton("Manage Saves");
+
 
     public MainMenuPanel() {
         setLayout(new BorderLayout());
@@ -25,12 +27,22 @@ public class MainMenuPanel extends JPanel {
 
         JPanel centerPanel = new JPanel(new GridLayout(1, 2, 10, 10));
 
-        // Список сохранений
-        saveListPanel.setLayout(new BoxLayout(saveListPanel, BoxLayout.Y_AXIS));
-        saveListPanel.setBorder(BorderFactory.createTitledBorder("Saved Games"));
-        centerPanel.add(new JScrollPane(saveListPanel));
+        // Обертка для левой панели: список сохранений + кнопка Manage Saves
+        JPanel saveListWrapperPanel = new JPanel();
+        saveListWrapperPanel.setLayout(new BorderLayout());
+        saveListWrapperPanel.setBorder(BorderFactory.createTitledBorder("Saved Games"));
 
-        // Новая игра
+        saveListPanel.setLayout(new BoxLayout(saveListPanel, BoxLayout.Y_AXIS));
+        JScrollPane scrollPane = new JScrollPane(saveListPanel);
+        saveListWrapperPanel.add(scrollPane, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(manageSavesButton);
+        saveListWrapperPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        centerPanel.add(saveListWrapperPanel);
+
+        // Правая панель — новая игра
         JPanel newGamePanel = new JPanel();
         newGamePanel.setLayout(new BoxLayout(newGamePanel, BoxLayout.Y_AXIS));
         newGamePanel.setBorder(BorderFactory.createTitledBorder("New Game"));
@@ -62,4 +74,5 @@ public class MainMenuPanel extends JPanel {
     public JButton getStartButton() { return startButton; }
     public JButton getManageRulesButton() { return manageRulesButton; }
     public JButton getExitButton() { return exitButton; }
+    public JButton getManageSavesButton() { return manageSavesButton; }
 }

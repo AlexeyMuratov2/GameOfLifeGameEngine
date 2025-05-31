@@ -4,9 +4,6 @@ import org.example.model.GridModelObserver;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.function.Consumer;
 
 public class GridView implements View, GridModelObserver {
     private final JPanel panel;
@@ -14,7 +11,6 @@ public class GridView implements View, GridModelObserver {
     private int cols;
     private JPanel[][] cells;
 
-    // Интерфейс-обработчик кликов
     public interface CellClickListener {
         void onCellClicked(int row, int col);
     }

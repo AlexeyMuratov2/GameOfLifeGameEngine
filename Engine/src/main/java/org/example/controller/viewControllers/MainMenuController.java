@@ -6,6 +6,7 @@ import org.example.db.BoardSaveRepository;
 import org.example.db.CustomRuleRepository;
 import org.example.view.menu.MainMenuPanel;
 import org.example.view.menu.RuleManagementDialog;
+import org.example.view.menu.SaveManagementDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +44,23 @@ public class MainMenuController {
         });
 
         view.getExitButton().addActionListener(e -> System.exit(0));
+
+        view.getManageSavesButton().addActionListener(e -> openSaveManagementDialog());
     }
+
+    private void openSaveManagementDialog() {
+        DefaultListModel<BoardSaveMeta> saveListModel = new DefaultListModel<>();
+        for (BoardSaveMeta save : boardSaveRepository.listAllSaves()) {
+            saveListModel.addElement(save);
+        }
+
+        SaveManagementDialog dialog = new SaveManagementDialog(frame, boardSaveRepository, saveListModel);
+        dialog.setVisible(true);
+
+        loadSavedGames();
+    }
+
+
 
     private void loadRules() {
         view.getRuleBox().addItem("Game of Life");

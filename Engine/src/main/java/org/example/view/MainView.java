@@ -12,7 +12,7 @@ public class MainView {
         this.frame = frame;
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setSize(1200, 800);
-        this.frame.setLocationRelativeTo(null); // Центрируем окно
+        this.frame.setLocationRelativeTo(null);
 
 
         this.saveListPanel = new SaveListPanel();
@@ -37,7 +37,6 @@ public class MainView {
         return gamePanel;
     }
 
-    // В будущем можно добавить метод для смены содержимого
     public void setContent(JPanel panel) {
         frame.setContentPane(panel);
         frame.revalidate();
