@@ -12,15 +12,25 @@ public class SaveListPanel extends JPanel {
 
     public SaveListPanel() {
         super(new BorderLayout());
+        setBackground(Color.WHITE);
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         listModel = new DefaultListModel<>();
         saveJList = new JList<>(listModel);
         saveJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        saveJList.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        saveJList.setFixedCellHeight(28);
         saveJList.setCellRenderer(new SaveListCellRenderer());
 
-
         JScrollPane scrollPane = new JScrollPane(saveJList);
-        this.add(new JLabel("Saved figures:"), BorderLayout.NORTH);
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(180, 180, 180)));
+
+        JLabel titleLabel = new JLabel("Saved Figures:");
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        titleLabel.setForeground(Color.DARK_GRAY);
+
+        this.add(titleLabel, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
     }
 
@@ -47,17 +57,17 @@ public class SaveListPanel extends JPanel {
         @Override
         public Component getListCellRendererComponent(JList<? extends BoardSaveMeta> list, BoardSaveMeta value, int index,
                                                       boolean isSelected, boolean cellHasFocus) {
-            setText(value.getName() + " (" + value.getRows() + "x" + value.getCols() + ")");
+            setText(value.getName() + " (" + value.getRows() + "×" + value.getCols() + ")");
             setOpaque(true);
-            setFont(new Font("SansSerif", Font.PLAIN, 14));
             setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+            setFont(new Font("SansSerif", Font.PLAIN, 14));
 
             if (isSelected) {
-                setBackground(Color.LIGHT_GRAY);
-                setForeground(Color.BLACK);
+                setBackground(new Color(200, 220, 240));
+                setForeground(Color.DARK_GRAY);
             } else {
                 setBackground(Color.WHITE);
-                setForeground(Color.DARK_GRAY);
+                setForeground(Color.BLACK);
             }
 
             return this;

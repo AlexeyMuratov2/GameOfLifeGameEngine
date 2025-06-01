@@ -1,6 +1,7 @@
 package org.example.view;
 
 import org.example.model.GridModelObserver;
+import org.example.view.View;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,31 +21,28 @@ public class GridView implements View, GridModelObserver {
     public GridView(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
-        this.panel = new JPanel(new GridLayout(rows, cols));
+        this.panel = new JPanel(new GridLayout(rows, cols, 1, 1)); // небольшой отступ между клетками
+        this.panel.setBackground(new Color(220, 220, 220)); // фон панели — светло-серый
         this.cells = new JPanel[rows][cols];
 
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < cols; x++) {
-                final int row = y;
-                final int col = x;
-
                 JPanel cell = new JPanel();
                 cell.setBackground(Color.WHITE);
-                cell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-
-
-                cells[y][x] = cell;
+                cell.setBorder(BorderFactory.createLineBorder(new Color(180, 180, 180))); // светло-серая граница
+                this.cells[y][x] = cell;
                 panel.add(cell);
             }
         }
     }
 
     public void enableDrawingSupport() {
-        panel.setFocusable(true); // На всякий случай
+        panel.setFocusable(true);
     }
 
     public void updateCell(int x, int y, boolean alive) {
-        cells[y][x].setBackground(alive ? Color.BLACK : Color.WHITE);
+        Color aliveColor = new Color(30, 30, 30); // темно-серый вместо чёрного — более мягко
+        cells[y][x].setBackground(alive ? aliveColor : Color.WHITE);
         cells[y][x].repaint();
     }
 
@@ -61,28 +59,22 @@ public class GridView implements View, GridModelObserver {
         return cells[row][col];
     }
 
-
     public void setCellClickListener(CellClickListener listener) {
         this.cellClickListener = listener;
     }
 
     public void rebuild(int newRows, int newCols) {
         panel.removeAll();
-        panel.setLayout(new GridLayout(newRows, newCols));
+        panel.setLayout(new GridLayout(newRows, newCols, 1, 1));
         this.rows = newRows;
         this.cols = newCols;
         JPanel[][] newCells = new JPanel[newRows][newCols];
 
         for (int y = 0; y < newRows; y++) {
             for (int x = 0; x < newCols; x++) {
-                final int row = y;
-                final int col = x;
-
                 JPanel cell = new JPanel();
                 cell.setBackground(Color.WHITE);
-                cell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-
-
+                cell.setBorder(BorderFactory.createLineBorder(new Color(180, 180, 180)));
                 newCells[y][x] = cell;
                 panel.add(cell);
             }
@@ -110,8 +102,6 @@ public class GridView implements View, GridModelObserver {
         return null;
     }
 
-
-
     @Override
     public void onGridUpdate(boolean[][] grid) {
         for (int y = 0; y < rows; y++) {
@@ -128,5 +118,4 @@ public class GridView implements View, GridModelObserver {
     public int getColCount() {
         return cols;
     }
-
 }

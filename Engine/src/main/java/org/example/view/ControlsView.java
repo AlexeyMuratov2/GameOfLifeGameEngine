@@ -15,15 +15,33 @@ public class ControlsView implements View {
 
     public ControlsView() {
         panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        panel.setBackground(Color.WHITE);
 
-        startButton = new JButton("▶ Start");
-        stopButton = new JButton("⏸ Stop");
-        stepButton = new JButton("⏭ Step");
-        undoButton = new JButton("⏪ Undo");
+        Font btnFont = new Font("SansSerif", Font.PLAIN, 14);
+
+        startButton = new JButton("Start");
+        stopButton = new JButton("Stop");
+        stepButton = new JButton("Step");
+        undoButton = new JButton("Undo");
         ruleSelector = new JComboBox<>(new String[]{"Game of Life", "HighLife", "Day & Night", "Seeds"});
 
-        saveButton = new JButton("💾 Save");
-        returnButton = new JButton("🔙 Return");
+        saveButton = new JButton("Save");
+        returnButton = new JButton("Return");
+
+        JButton[] buttons = {startButton, stopButton, stepButton, undoButton, saveButton, returnButton};
+        for (JButton b : buttons) {
+            b.setFont(btnFont);
+            b.setFocusPainted(false);
+            b.setBackground(new Color(230, 230, 230));
+            b.setForeground(Color.DARK_GRAY);
+            b.setBorder(BorderFactory.createLineBorder(new Color(160, 160, 160)));
+        }
+
+        ruleSelector.setFont(btnFont);
+        ruleSelector.setBackground(Color.WHITE);
+        ruleSelector.setForeground(Color.DARK_GRAY);
+        ruleSelector.setBorder(BorderFactory.createLineBorder(new Color(160, 160, 160)));
 
         panel.add(startButton);
         panel.add(stopButton);

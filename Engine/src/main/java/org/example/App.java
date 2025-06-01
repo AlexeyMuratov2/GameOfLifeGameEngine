@@ -34,7 +34,7 @@ public class App {
 
             frame = new JFrame("Game of Life");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(800, 600);
+            frame.setSize(1200, 800);
 
             MainMenuController menuController = new MainMenuController(frame, boardSaveRepo, customRuleRepo);
             frame.setContentPane(menuController.getViewPanel());
