@@ -3,7 +3,7 @@ package org.example.rules;
 import org.example.db.CustomRuleRepository;
 
 public class RuleFactory {
-    private static RuleFactory instance;
+    private static volatile RuleFactory instance;
 
     private final CustomRuleRepository repository;
 
@@ -12,8 +12,10 @@ public class RuleFactory {
     }
 
     public static void init(CustomRuleRepository repository) {
-        if (instance == null) {
-            instance = new RuleFactory(repository);
+        synchronized (RuleFactory.class) {
+            if (instance == null) {
+                instance = new RuleFactory(repository);
+            }
         }
     }
 

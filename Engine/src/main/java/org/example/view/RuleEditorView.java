@@ -13,7 +13,7 @@ public class RuleEditorView {
     public RuleEditorView(JFrame parentFrame) {
         dialog = new JDialog(parentFrame, "Add New Rule", true);
         dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-        dialog.setSize(350, 220);
+        dialog.setSize(350, 250);
         dialog.setLocationRelativeTo(parentFrame);
 
         JPanel mainPanel = new JPanel();

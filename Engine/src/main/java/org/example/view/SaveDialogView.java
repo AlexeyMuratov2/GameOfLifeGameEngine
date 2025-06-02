@@ -12,7 +12,7 @@ public class SaveDialogView {
     public SaveDialogView(JFrame parentFrame) {
         dialog = new JDialog(parentFrame, "Save Game", true);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialog.setSize(350, 160);
+        dialog.setSize(350, 200);
         dialog.setLocationRelativeTo(parentFrame);
 
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
